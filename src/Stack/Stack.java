@@ -1,17 +1,33 @@
 package Stack;
 
 public class Stack<T> implements Cloneable{
-	private LinkedList<T> linkedList = new LinkedList<T>();
 	private int size;
-
-	
-	public boolean isEmpty(){
-		return linkedList.isEmpty();
-	}
-	public void push(T value){
-		size++;
-		linkedList.push(value);
+		private static class Node<T> implements Cloneable{
+			private T data;
+			private Node<T> next;
 		
+				public Node(T data){
+					this.data = data;
+				}
+
+				@Override
+				public String toString() {
+				return data.toString();
+			}
+		
+		}
+	private Node<T> top = null;
+	
+		
+
+	public boolean isEmpty(){
+		return top == null;
+	}
+	public void push(T data){
+		size++;
+		Node<T> node = new Node<T>(data);
+		node.next = top;
+		top = node;
 	}
 	public T pop(){
 		
@@ -21,12 +37,15 @@ public class Stack<T> implements Cloneable{
 		}
 		else{
 			size--;
-			return linkedList.pop();
+			Node<T> last = top;
+			top = top.next;
+			return last.data;
+			
 		}
 		
 	}
 	public T peek(){
-		return linkedList.peek();
+		return top.data;
 	}
 	public int size(){
 		return size;
@@ -34,95 +53,38 @@ public class Stack<T> implements Cloneable{
 	@Override
 	public Stack clone() throws CloneNotSupportedException{
 		Stack s  = new Stack();
-		s.linkedList  = this.linkedList.clone();
-		s.size = this.size;
+		Node<T> topSave = this.top;
+		while(!(isEmpty())){
+			s.push(pop());
+		}
+		this.size = s.size;
+		this.top = topSave;
 		return s;
 	}
 	public void clear(){
-		this.linkedList.clear();
+		this.top = null;
 	}
 	public <T> T [] tuarei(){
-		return linkedList.tuarei(size);
-	}
-	@Override
-	public String toString() {
-		return "Stack [" + linkedList + "]";
-	}
-}
-class LinkedList<T> implements Cloneable{
-	private static class Node<T> implements Cloneable{
-		private T data;
-		private Node<T> next;
-		
-			public Node(T data){
-				this.data = data;
-			}
-			
-			
-		@Override
-		public String toString() {
-            return data.toString();
-        }
-		
-	}
-	private Node<T> top = null;
-	private Node<T> value = null;
-	
-	public boolean isEmpty(){
-		return value == null;
-	}
-	public void push(T data){
-		Node<T> node = new Node<T>(data);
-		node.next = value;
-		value = node;
-		top = value;
-	}
-	public T pop(){
-		Node<T> last = value;
-		value = value.next;
-		return last.data;
-	}
-	public T peek(){
-		return value.data;
-	}
-	public void clear(){
-		this.top = null;
-		
-		
-		this.value = null;
-		
-	}
-	public <T>  T [] tuarei(int size){
+		int sizze = size;
 		T []array =  (T[])new Object[size];
-		for(int i = 0; i < size;i++){
+		for(int i = 0; i < sizze;i++){
 			if(!(isEmpty())){
 			array[i] = (T) pop();
 			}
-			else{
-				System.out.println("pp");
-			}
+			
 		}
 		return array;
 	}
-	
 	@Override
-    public String toString() {
-        StringBuilder listBuilder = new StringBuilder();
-        Node currentNode = value;
-        while (currentNode != null) {
-            listBuilder.append(currentNode).append(",");
-            currentNode = currentNode.next;
-        }
-        
-        return listBuilder.toString();
-    }
-	@Override
-	public LinkedList clone() throws CloneNotSupportedException{
-		LinkedList l = new LinkedList<T>();
-		while(!(isEmpty())){
-			l.push(pop());
-		}
-		this.value = this.top;
-		return l;
+	public String toString() {
+		 StringBuilder listBuilder = new StringBuilder();
+	        Node currentNode = top;
+	        while (currentNode != null) {
+	            listBuilder.append(currentNode).append(",");
+	            currentNode = currentNode.next;
+	        }
+	        
+		return "Stack [" + listBuilder.toString()+ "]";
 	}
 }
+

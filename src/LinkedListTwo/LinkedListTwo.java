@@ -1,9 +1,9 @@
 
-package LinkedListPrior;
+package LinkedListTwo;
 
 
 
-public class LinkedListPrior<T> {
+public class LinkedListTwo<T> {
 	private int size;
 	private static class Node<T> implements Cloneable{
 		private T data;
@@ -188,9 +188,9 @@ public class LinkedListPrior<T> {
 	    return -1;
 	}
 	
-	public LinkedListPrior clone(){
+	public LinkedListTwo clone(){
 
-		LinkedListPrior<T> list = new LinkedListPrior<T>();
+		LinkedListTwo<T> list = new LinkedListTwo<T>();
 		for(int i=0;i < size;i++){
 			list.add(get(i));
 		}

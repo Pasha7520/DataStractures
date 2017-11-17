@@ -1,6 +1,7 @@
 package Queue;
 
 public class Queue<T> implements Cloneable {
+	private int size;
 		private static class Node<T> implements Cloneable{
 			private T data;
 			private Node<T> next;
@@ -17,8 +18,6 @@ public class Queue<T> implements Cloneable {
 		
 	}
 	private Node<T> first = null;
-	private Node<T> value = null;
-	private int size;
 
 	
 		public boolean isEmpty(){
@@ -26,16 +25,20 @@ public class Queue<T> implements Cloneable {
 		}
 	
 	public void push(T data){
+		size++;
 		Node<T> node = new Node<T>(data);
+		Node<T> firstFix = first;
 		if(first == null){
 			first = node;
-			value = node;
+			return;
 		}
-		else{
-			this.value.next = node;
-			value = node;
+		while(first.next != null){
+			first=first.next;
 		}
-		size++;
+		first.next = node;
+		first = firstFix;
+		
+		System.out.println(first);
 	}
 	
 	public T pop(){
@@ -64,30 +67,28 @@ public class Queue<T> implements Cloneable {
 	@Override
 	public Queue clone() throws CloneNotSupportedException{
 		Queue s  = new Queue();
-		s.size = this.size;
 		Node<T> firstSave = this.first;
 		while(!(isEmpty())){
 			s.push(pop());
 		}
 		this.first = firstSave;
+		this.size = s.size;
 		return s;
 	}
 	
 	public void clear(){
 		this.first = null;
-		this.value = null;
 	
 	}
 	
 	public <T>  T [] tuarei(){
+		int sizze = size;
 		T []array =  (T[])new Object[size];
-		for(int i = 0; i < size;i++){
+		for(int i = 0; i < sizze;i++){
 			if(!(isEmpty())){
 			array[i] = (T) pop();
 			}
-			else{
-				
-			}
+			
 		}
 		return array;
 	}

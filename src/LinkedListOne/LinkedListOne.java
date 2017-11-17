@@ -1,6 +1,6 @@
 package LinkedListOne;
 
-import LinkedListPrior.LinkedListPrior;
+import LinkedListTwo.LinkedListTwo;
 
 public class LinkedListOne<T> implements Cloneable{
 	private int size;
